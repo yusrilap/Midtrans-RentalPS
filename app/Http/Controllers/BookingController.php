@@ -49,8 +49,6 @@ class BookingController extends Controller
                 ),
             );
 
-            // dd($params);
-
             $snapToken = \Midtrans\Snap::getSnapToken($params);
             //dd($snapToken);
             return view('payment', compact('snapToken', 'booking'));
@@ -63,7 +61,7 @@ class BookingController extends Controller
         if ($hashed === $request->signature_key) {
             if ($request->transaction_status === 'capture' || $request->transaction_status === 'settlement') {
                 $orderIdParts = explode('-', $request->order_id);
-                $bookingId = $orderIdParts[1] ?? null; // Pastikan indeks sesuai dengan format order_id
+                $bookingId = $orderIdParts[1] ?? null;
 
                 if ($bookingId) {
                     $booking = Booking::find($bookingId);
